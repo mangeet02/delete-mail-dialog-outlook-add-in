@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Delete the selected mail</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+        <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.min.css">
+        <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.components.min.css">
+        <link rel="stylesheet" href="style.css">
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+        <script type="text/javascript" src="node_modules/easyews/easyews.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/easyews@1.0.21/easyEws.js"></script>
+        <script src="form.js" type="text/javascript"></script>
+
+        <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.0/css/fabric.min.css">
+
+        <script>
+            Office.onReady(function(info) {
+                if (info.isOfficeReady) {
+                    function moveSelectedItemToDeletedItems() {
+                        var item = Office.context.mailbox.item;
+                        var itemId = item.itemId;
+    
+                        easyEws.moveItem(itemId, "deleteditems", function() {
+                            console.log("Spostamento riuscito");
+                        }, function(error) {
+                            console.log("Errore durante lo spostamento: " + error);
+                        });
+                    }
+    
+                    document.getElementById("moveToDeletedItemsButton").addEventListener("click", moveSelectedItemToDeletedItems);
+                }
+            });
+        </script>
+    </head>
+    <body class="ms-font-m ms-welcome">
+        <button id="moveToDeletedItemsButton">Delete Mail</button>
+    </body>
+</html>
